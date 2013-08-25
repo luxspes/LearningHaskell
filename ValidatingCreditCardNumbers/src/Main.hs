@@ -23,6 +23,9 @@ sumDigits [x] = x
 sumDigits (x:xs) = digitSum x + sumDigits xs 
                    where digitSum =  sum . toDigits 
 
+validate:: Integer -> Bool
+validate v = False
+
 
 
 main::IO()
@@ -35,3 +38,8 @@ main = do
        print . show $ doubleEveryOther $ toDigits 1234
        putStr "sumDigits "
        print . show $ sumDigits $ doubleEveryOther $ toDigits 8765
+       putStr "validate "
+       print . show $ validate 4012888888881881
+       putStr "validate "
+       print . show $ validate 4012888888881882
+       
