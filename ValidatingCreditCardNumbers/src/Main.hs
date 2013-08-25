@@ -5,5 +5,7 @@ toDigitsRev = undefined
 
 main::IO()
 main = do
-       print "Hello"
-       print "Bye"
+       putStr "toDigits "
+       putStrLn (show 1234)
+       putStr "toDigitsRev "
+       putStrLn (show 1234)
