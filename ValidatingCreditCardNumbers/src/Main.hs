@@ -1,12 +1,12 @@
 module Main where
 
-toDigits :: Integer -> [Integer]
+toDigitsRev :: Integer -> [Integer]
 
-toDigits  0 = []
-toDigits  l = (mod l 10) : toDigits  (div l 10)
+toDigitsRev  0 = []
+toDigitsRev  l = (mod l 10) : toDigitsRev  (div l 10)
 
 
-toDigitsRev x = x
+toDigits = reverse . toDigitsRev
 
 main::IO()
 main = do
