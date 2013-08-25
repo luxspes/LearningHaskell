@@ -2,9 +2,9 @@ module Main where
 
 toDigits :: Integer -> [Integer]
 
-toDigits x = (mod x 10) : toDigitList (mod x 10) (div x 10)
-             where toDigitList d 0 = []
-                   toDigitList d l = (mod l 10) : toDigitList (mod l 10) (div l 10)
+toDigits x = (mod x 10) : toDigitList  (div x 10)
+             where toDigitList  0 = []
+                   toDigitList  l = (mod l 10) : toDigitList  (div l 10)
 
 
 toDigitsRev x = x
