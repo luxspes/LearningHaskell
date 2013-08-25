@@ -24,7 +24,7 @@ sumDigits (x:xs) = digitSum x + sumDigits xs
                    where digitSum =  sum . toDigits 
 
 validate:: Integer -> Bool
-validate v = False
+validate v = (mod (sumDigits $ doubleEveryOther $ toDigits v) 10) == 0
 
 
 
