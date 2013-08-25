@@ -10,6 +10,7 @@ toDigits = reverse . toDigitsRev
 
 doubleEveryOtherRev :: [Integer] -> [Integer]
 doubleEveryOtherRev [] = []
+doubleEveryOtherRev [x] = [x]
 doubleEveryOtherRev l = last l : reallyDoubleEveryOther  (init l)
                              where reallyDoubleEveryOther l = (last l) * 2 : doubleEveryOtherRev  (init l)
 
