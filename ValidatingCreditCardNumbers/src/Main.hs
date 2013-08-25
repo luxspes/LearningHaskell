@@ -20,7 +20,8 @@ doubleEveryOther = reverse . doubleEveryOtherRev
 sumDigits:: [Integer] -> Integer
 sumDigits [] = 0
 sumDigits [x] = x
-sumDigits (x:xs) = x + sumDigits xs
+sumDigits (x:xs) = digitSum x + sumDigits xs 
+                   where digitSum =  sum . toDigits 
 
 
 
