@@ -1,26 +1,36 @@
 module Main where
 
-toDigitsRev :: Integer -> [Integer]
+
 -- como hacer esto con unfoldr?
 toDigitsRev  0 = []
 toDigitsRev  l = (mod (abs l) 10) : toDigitsRev  (div (abs l) 10)
 
-
+toDigits :: Integer -> [Integer]
 toDigits = reverse . toDigitsRev
 
-doubleEveryOtherRev :: [Integer] -> [Integer]
+
 doubleEveryOtherRev [] = []
 doubleEveryOtherRev [x] = [x]
 doubleEveryOtherRev l = last l : reallyDoubleEveryOther  (init l)
                              where reallyDoubleEveryOther l = (last l) * 2 : doubleEveryOtherRev  (init l)
 
+doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther = reverse . doubleEveryOtherRev
+
+sumDigits:: [Integer] -> Integer
+sumDigits [] = 0
+sumDigits [x] = x
+sumDigits (x:xs) = x + sumDigits xs
+
+
 
 main::IO()
 main = do
        putStr "toDigits "
-       putStrLn . show $ toDigits 1234
+       print . show $ toDigits 1234
        putStr "toDigitsRev "
-       putStrLn . show $ toDigitsRev 1234
+       print . show $ toDigitsRev 1234
        putStr "doubleEveryOther "
-       putStrLn . show $ doubleEveryOther $ toDigits 1234
+       print . show $ doubleEveryOther $ toDigits 1234
+       putStr "sumDigits "
+       print . show $ sumDigits $ doubleEveryOther $ toDigits 8765
