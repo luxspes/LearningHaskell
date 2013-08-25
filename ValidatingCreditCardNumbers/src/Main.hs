@@ -1,11 +1,11 @@
 module Main where
 
-toDigits = undefined
-toDigitsRev = undefined
+toDigits x = x
+toDigitsRev x = x
 
 main::IO()
 main = do
        putStr "toDigits "
-       putStrLn (show 1234)
+       putStrLn (show (toDigits 1234))
        putStr "toDigitsRev "
-       putStrLn (show 1234)
+       putStrLn (show (toDigitsRev 1234))
