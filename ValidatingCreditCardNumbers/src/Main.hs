@@ -3,7 +3,7 @@ module Main where
 toDigitsRev :: Integer -> [Integer]
 
 toDigitsRev  0 = []
-toDigitsRev  l = (mod l 10) : toDigitsRev  (div l 10)
+toDigitsRev  l = (mod (abs l) 10) : toDigitsRev  (div (abs l) 10)
 
 
 toDigits = reverse . toDigitsRev
