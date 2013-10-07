@@ -11,11 +11,17 @@ getmoves:: Pegs->[Move]
 getmoves pegs  = []
 
 getmove:: Pegs->(Move,Pegs)
-getmove pegs  -- = (("",""), Pegs ("",[]) ("",[]) ("",[]) )
-  | length (snd(p1 pegs)) == 1 && length (snd(p2 pegs)) == 0 && length (snd(p3 pegs)) == 0 =  (("",""), Pegs ("",[]) ("",[]) ("",[]) )
-  | otherwise = (("",""), Pegs ("",[]) ("",[]) ("",[]) )
+--vacio
+getmove (Pegs (t1,[]) (t2,[]) (t3,[])) = (("",""), Pegs (t1,[]) (t2,[]) (t3,[]) )
+-- uno
+getmove (Pegs (t1,[a]) (t2,[]) (t3,[])) = ((t1,t3), Pegs (t1,[]) (t2,[]) (t3,[a]) )
+-- dos 
+getmove (Pegs (t1,[a,b]) (t2,[]) (t3,[])) = ((t1,t2), Pegs (t1,[b]) (t2,[a]) (t3,[]) )
+getmove (Pegs (t1,[b]) (t2,[a]) (t3,[])) = ((t1,t3), Pegs (t1,[]) (t2,[a]) (t3,[b]) )
+getmove (Pegs (t1,[]) (t2,[a]) (t3,[b])) = ((t2,t3), Pegs (t1,[]) (t2,[]) (t3,[a,b]) )
+--getmove pegs                         = (("",""), Pegs ("",[]) ("",[]) ("",[]) )
 
 
 main::IO()
 main = do
-  print $ hanoi 1 "t1" "t2" "t3"
+  print $ hanoi 2 "t1" "t2" "t3"
