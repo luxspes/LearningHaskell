@@ -1,0 +1,12 @@
+name:           HanoiTowers
+version:        0.1
+cabal-version:  >=1.2
+build-type:     Simple
+author:         luxspes
+
+executable HanoiTowers
+  hs-source-dirs:  src
+  main-is:         Main.hs
+  build-depends:   base >= 4
+  ghc-options:     -Wall
+
