@@ -42,7 +42,6 @@ makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 main::IO()
 main = do
   print [ ("t1",[1,2]),("t2",[]),("t3",[])]
-  print $ makeMove [("t1",[1,2]),("t2",[]),("t3",[])] ("t1","t2");
-  print $ makeMove  (makeMove [("t1",[1,2]),("t2",[]),("t3",[])] ("t1","t2")) ("t1","t3");
-  print $ makeMove (makeMove  (makeMove [("t1",[1,2]),("t2",[]),("t3",[])] ("t1","t2")) ("t1","t3")) ("t2","t3");
-  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3"),("t2","t3") ];
+  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2")];
+  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3")];
+  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3"),("t2","t3")];
