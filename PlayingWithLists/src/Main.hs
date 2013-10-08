@@ -10,4 +10,5 @@ main = do
         print $ filter odd listaSimple 
         print $ filter (\x->x==4) listaSimple
         print $ filter (\x->x/=4) listaSimple
+        print ( filter (\x->x==4) listaSimple ++ filter  (\x->x/=4) listaSimple )
         print listaDeTuplas
