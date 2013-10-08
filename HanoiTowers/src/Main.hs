@@ -10,8 +10,20 @@ hanoi disks t1 t2 t3 =  getmoves [(t1,[1..disks]),(t2,[]),(t3,[])]
 getmoves:: [Peg]->[Move]
 getmoves pegs  = []
 
+
+selectSource::[Peg]->Move->[Peg]
+selectSource list move = filter matchPeg list where matchPeg peg = fst(peg)==fst(move)
+
+selectTarget::[Peg]->Move->[Peg]
+selectTarget list move = filter matchPeg list where matchPeg peg = fst(peg)==snd(move)
+
+selectOthers::[Peg]->Move->[Peg]
+selectOthers list move = filter matchPeg list where matchPeg peg = not (fst(peg)==fst(move) || fst(peg)==snd(move))
+
 makeMove:: [Peg]->Move->[Peg]
-makeMove [x] move = [x]
+makeMove pegs move = (selectSource pegs move)++(selectTarget pegs move)++(selectOthers pegs move)
+
+
 
 main::IO()
 main = do
