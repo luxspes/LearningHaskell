@@ -11,8 +11,7 @@ getmoves:: [Peg]->[Move]
 getmoves pegs  = []
 
 makeMove:: [Peg]->Move->[Peg]
-makeMove pegs move = pegs
-
+makeMove [x] move = [x]
 
 main::IO()
 main = do
