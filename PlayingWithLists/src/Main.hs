@@ -11,4 +11,5 @@ main = do
         print $ filter (\x->x==4) listaSimple
         print $ filter (\x->x/=4) listaSimple
         print ( filter (\x->x==4) listaSimple ++ filter  (\x->x/=4) listaSimple )
+        print $ init listaSimple
         print listaDeTuplas
