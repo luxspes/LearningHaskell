@@ -20,11 +20,12 @@ selectTarget list move = filter matchPeg list where matchPeg peg = fst(peg)==snd
 selectOthers::[Peg]->Move->[Peg]
 selectOthers list move = filter matchPeg list where matchPeg peg = not (fst(peg)==fst(move) || fst(peg)==snd(move))
 
-makeMove:: [Peg]->Move->[Peg]
-makeMove pegs move = (selectSource pegs move)++(selectTarget pegs move)++(selectOthers pegs move)
-
 removeTop:: [Peg] -> [Peg]
 removeTop [peg] =(fst(peg),remainingDisks):[] where remainingDisks = (init  originalDisks) where originalDisks = (snd peg)
+
+makeMove:: [Peg]->Move->[Peg]
+makeMove pegs move = removeTop (selectSource pegs move)++(selectTarget pegs move)++(selectOthers pegs move)
+
 
 
 main::IO()
