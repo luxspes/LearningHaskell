@@ -34,7 +34,9 @@ makeMove:: [Peg]->Move->[Peg]
 makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
 
 makeMoves:: [Peg]->[Move]->[Peg]
-makeMoves pegs moves = pegs
+makeMoves pegs [] = pegs
+makeMoves pegs [move] = makeMove pegs move
+makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 
 
 main::IO()
