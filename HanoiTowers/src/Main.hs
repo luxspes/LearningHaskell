@@ -33,6 +33,8 @@ addTop [targetPeg] sourcePeg =(fst(targetPeg),newDisks):[] where newDisks = orig
 makeMove:: [Peg]->Move->[Peg]
 makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
 
+makeMoves:: [Peg]->[Move]->[Peg]
+makeMoves pegs moves = pegs
 
 
 main::IO()
@@ -41,3 +43,4 @@ main = do
   print $ makeMove [("t1",[1,2]),("t2",[]),("t3",[])] ("t1","t2");
   print $ makeMove  (makeMove [("t1",[1,2]),("t2",[]),("t3",[])] ("t1","t2")) ("t1","t3");
   print $ makeMove (makeMove  (makeMove [("t1",[1,2]),("t2",[]),("t3",[])] ("t1","t2")) ("t1","t3")) ("t2","t3");
+  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3"),("t2","t3") ];
