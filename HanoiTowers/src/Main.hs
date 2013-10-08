@@ -23,6 +23,9 @@ selectOthers list move = filter matchPeg list where matchPeg peg = not (fst(peg)
 removeTop:: [Peg] -> [Peg]
 removeTop [peg] =(fst(peg),remainingDisks):[] where remainingDisks = (init  originalDisks) where originalDisks = (snd peg)
 
+getTop:: [Peg] -> Integer
+getTop [peg] = (last originalDisks) where originalDisks = (snd peg)
+
 makeMove:: [Peg]->Move->[Peg]
 makeMove pegs move = removeTop (selectSource pegs move)++(selectTarget pegs move)++(selectOthers pegs move)
 
