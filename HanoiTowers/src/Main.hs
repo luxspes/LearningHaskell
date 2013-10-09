@@ -22,8 +22,9 @@ selectSource list move = (head (filter matchPeg list)) where matchPeg peg = fst(
                                                                             
 makeMove:: [Peg]->Move->[Peg]
 
-makeMove pegs move = helper [] pegs move pegs where helper acc (peg:ps) (source,target) originalpegs = helper (acc++[(addDisk (removeDisk peg source) target (selectSource originalpegs (source,target) ) )]) ps (source,target) originalpegs 
-                                                    helper acc _ _ _  = acc
+makeMove pegs move = let tomove = selectSource pegs move
+                     in helper [] pegs move tomove where helper acc (peg:ps) (source,target) tomove = helper (acc++[(addDisk (removeDisk peg source) target tomove )]) ps (source,target) tomove 
+                                                         helper acc _ _ _  = acc
                                                         
 
 
