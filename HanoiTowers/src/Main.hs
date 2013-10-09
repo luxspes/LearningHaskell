@@ -31,7 +31,10 @@ addTop [targetPeg] sourcePeg =(fst(targetPeg),newDisks):[] where newDisks = orig
                                                                         where originalDisks = (snd targetPeg)
                                                                                
 makeMove:: [Peg]->Move->[Peg]
-makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
+--makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
+makeMove pegs move = helper [] pegs move where helper acc (peg:ps) (source,target) = helper ([peg]++acc) ps (source,target)
+                                               helper acc _ _ = acc
+
 
 makeMoves:: [Peg]->[Move]->[Peg]
 makeMoves pegs [] = pegs
