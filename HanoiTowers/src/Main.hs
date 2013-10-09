@@ -7,10 +7,10 @@ type Peg = (PegName,[Integer])
 
 removeDisk::Peg->PegName->Peg
 removeDisk (name,[]) _ = (name,[])
-removeDisk (name,ds) source = if(name==source) then (name,(init ds)) else (name,ds)
+removeDisk (name,ds) source = if(name==source) then (name,(tail ds)) else (name,ds)
 
 addDisk::Peg->PegName->Peg->Peg
-addDisk (name,ds) target (nametomove,dstomove) = if(name==target) then (name,ds++[(last dstomove)]) else (name,ds)
+addDisk (name,ds) target (nametomove,dstomove) = if(name==target) then (name,[(head dstomove)]++ds) else (name,ds)
 
 selectSource::[Peg]->Move->Peg
 selectSource list move = (head (filter matchPeg list)) where matchPeg peg = fst(peg)==fst(move)
@@ -32,6 +32,7 @@ makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 hanoi:: Integer->[Peg]->[Peg]
 hanoi 1 pegs = makeMoves pegs [("t1","t3")]
 hanoi 2 pegs = makeMoves pegs [("t1","t2"),("t1","t3"),("t2","t3")]
+hanoi 3 pegs = makeMoves pegs [("t1","t2"),("t1","t3"),("t2","t3")]
 
 
 main::IO()
@@ -41,4 +42,7 @@ main = do
 
   print [ ("t1",[1,2]),("t2",[]),("t3",[])];
   print $ hanoi 2 [ ("t1",[1,2]),("t2",[]),("t3",[])];
+  
+  print [ ("t1",[1,2,3]),("t2",[]),("t3",[])];
+  print $ hanoi 3 [ ("t1",[1,2,3]),("t2",[]),("t3",[])];
   
