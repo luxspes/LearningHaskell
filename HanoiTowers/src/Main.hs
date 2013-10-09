@@ -30,17 +30,20 @@ addTop [targetPeg] sourcePeg =(fst(targetPeg),newDisks):[] where newDisks = orig
                                                                         where originalDisks = (snd targetPeg)
 --}
 
-transform::Peg->PegName->Peg
-transform (n,[]) _ = (n,[])
-transform (n,d) s = if(n==s) then (n,(init d)) else (n,d)
+removeDisk::Peg->PegName->Peg
+removeDisk (name,[]) _ = (name,[])
+removeDisk (name,ds) source = if(name==source) then (name,(init ds)) else (name,ds)
 
 getTop::Peg->PegName->[Integer]
-getTop (n,[]) _ = []
-getTop (n,d) t = if(n==t) then [(last d)] else []
+getTop (name,[]) _ = []
+getTop (name,ds) source = if(name==source) then [(last ds)] else []
+
+addDisk::Peg->PegName->[Integer]->Peg
+addDisk (name,ds) target diskToAdd = if(name==target) then (name,ds++diskToAdd) else (name,ds)
                                                                             
 makeMove:: [Peg]->Move->[Peg]
 --makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
-makeMove pegs move = helper ([],[]) pegs move where helper (accl,acct) (peg:ps) (source,target) = helper ([(transform peg source)]++accl,[(getTop peg target)]++acct) ps (source,target) 
+makeMove pegs move = helper ([],[]) pegs move where helper (accl,acct) (peg:ps) (source,target) = helper ([(addDisk (removeDisk peg source) target acct)]++accl,(getTop peg source)++acct) ps (source,target) 
                                                     helper (accl,acct) _ _ = accl
 
 
