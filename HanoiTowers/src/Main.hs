@@ -29,13 +29,16 @@ makeMoves pegs [move] = makeMove pegs move
 makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 
 
+hanoi:: Integer->[Peg]->[Peg]
+hanoi 1 pegs = makeMoves pegs [("t1","t3")]
+hanoi 2 pegs = makeMoves pegs [("t1","t2"),("t1","t3"),("t2","t3")]
 
 
 main::IO()
 main = do
-  print [ ("t1",[1,2]),("t2",[]),("t3",[])]
-  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2")];
-  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3")];
-  print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3"),("t2","t3")];
-  
+  print [ ("t1",[1]),("t2",[]),("t3",[])];
+  print $ hanoi 1 [ ("t1",[1]),("t2",[]),("t3",[])];
+
+  print [ ("t1",[1,2]),("t2",[]),("t3",[])];
+  print $ hanoi 2 [ ("t1",[1,2]),("t2",[]),("t3",[])];
   
