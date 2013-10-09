@@ -10,7 +10,7 @@ hanoi disks t1 t2 t3 =  getmoves [(t1,[1..disks]),(t2,[]),(t3,[])]
 getmoves:: [Peg]->[Move]
 getmoves pegs  = []
 
-{--selectSource::[Peg]->Move->[Peg]
+selectSource::[Peg]->Move->[Peg]
 selectSource list move = filter matchPeg list where matchPeg peg = fst(peg)==fst(move)
 
 selectTarget::[Peg]->Move->[Peg]
@@ -27,25 +27,9 @@ getTop [peg] = (last originalDisks) where originalDisks = (snd peg)
 
 addTop:: [Peg]->[Peg]-> [Peg]
 addTop [targetPeg] sourcePeg =(fst(targetPeg),newDisks):[] where newDisks = originalDisks++[getTop sourcePeg] 
-                                                                        where originalDisks = (snd targetPeg)
---}
-
-removeDisk::Peg->PegName->Peg
-removeDisk (name,[]) _ = (name,[])
-removeDisk (name,ds) source = if(name==source) then (name,(init ds)) else (name,ds)
-
-getTop::Peg->PegName->[Integer]
-getTop (name,[]) _ = []
-getTop (name,ds) source = if(name==source) then [(last ds)] else []
-
-addDisk::Peg->PegName->[Integer]->Peg
-addDisk (name,ds) target diskToAdd = if(name==target) then (name,ds++diskToAdd) else (name,ds)
-                                                                            
+                                                                        where originalDisks = (snd targetPeg)                                                                          
 makeMove:: [Peg]->Move->[Peg]
---makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
-makeMove pegs move = helper ([],[]) pegs move where helper (accl,acct) (peg:ps) (source,target) = helper ([(addDisk (removeDisk peg source) target acct)]++accl,(getTop peg source)++acct) ps (source,target) 
-                                                    helper (accl,acct) _ _ = accl
-
+makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
 
 makeMoves:: [Peg]->[Move]->[Peg]
 makeMoves pegs [] = pegs
