@@ -10,26 +10,22 @@ hanoi disks t1 t2 t3 =  getmoves [(t1,[1..disks]),(t2,[]),(t3,[])]
 getmoves:: [Peg]->[Move]
 getmoves pegs  = []
 
-selectSource::[Peg]->Move->[Peg]
-selectSource list move = filter matchPeg list where matchPeg peg = fst(peg)==fst(move)
+removeDisk::Peg->PegName->Peg
+removeDisk (name,[]) _ = (name,[])
+removeDisk (name,ds) source = if(name==source) then (name,(init ds)) else (name,ds)
 
-selectTarget::[Peg]->Move->[Peg]
-selectTarget list move = filter matchPeg list where matchPeg peg = fst(peg)==snd(move)
+addDisk::Peg->PegName->Peg->Peg
+addDisk (name,ds) target (nametomove,dstomove) = if(name==target) then (name,ds++[(last dstomove)]) else (name,ds)
 
-selectOthers::[Peg]->Move->[Peg]
-selectOthers list move = filter matchPeg list where matchPeg peg = not (fst(peg)==fst(move) || fst(peg)==snd(move))
-
-removeTop:: [Peg] -> [Peg]
-removeTop [peg] =(fst(peg),remainingDisks):[] where remainingDisks = (init  originalDisks) where originalDisks = (snd peg)
-
-getTop:: [Peg] -> Integer
-getTop [peg] = (last originalDisks) where originalDisks = (snd peg)
-
-addTop:: [Peg]->[Peg]-> [Peg]
-addTop [targetPeg] sourcePeg =(fst(targetPeg),newDisks):[] where newDisks = originalDisks++[getTop sourcePeg] 
-                                                                        where originalDisks = (snd targetPeg)                                                                          
+selectSource::[Peg]->Move->Peg
+selectSource list move = (head (filter matchPeg list)) where matchPeg peg = fst(peg)==fst(move)
+                                                                            
 makeMove:: [Peg]->Move->[Peg]
-makeMove pegs move = removeTop (selectSource pegs move)++addTop (selectTarget pegs move) (selectSource pegs move) ++(selectOthers pegs move)
+
+makeMove pegs move = helper [] pegs move pegs where helper acc (peg:ps) (source,target) originalpegs = helper (acc++[(addDisk (removeDisk peg source) target (selectSource originalpegs (source,target) ) )]) ps (source,target) originalpegs 
+                                                    helper acc _ _ _  = acc
+                                                        
+
 
 makeMoves:: [Peg]->[Move]->[Peg]
 makeMoves pegs [] = pegs
