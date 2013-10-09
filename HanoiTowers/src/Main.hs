@@ -4,11 +4,6 @@ module Main where
 type PegName = String
 type Move = (PegName, PegName)
 type Peg = (PegName,[Integer])
-hanoi :: Integer -> PegName -> PegName -> PegName -> [Move]
-hanoi disks t1 t2 t3 =  getmoves [(t1,[1..disks]),(t2,[]),(t3,[])]
-
-getmoves:: [Peg]->[Move]
-getmoves pegs  = []
 
 removeDisk::Peg->PegName->Peg
 removeDisk (name,[]) _ = (name,[])
@@ -34,9 +29,13 @@ makeMoves pegs [move] = makeMove pegs move
 makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 
 
+
+
 main::IO()
 main = do
   print [ ("t1",[1,2]),("t2",[]),("t3",[])]
   print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2")];
   print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3")];
   print $ makeMoves [("t1",[1,2]),("t2",[]),("t3",[])] [("t1","t2"),("t1","t3"),("t2","t3")];
+  
+  
