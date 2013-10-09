@@ -31,8 +31,8 @@ makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 
 hanoi:: Integer->[Peg]->[Peg]
 hanoi 1 pegs = makeMoves pegs [("t1","t3")]
-hanoi 2 pegs = makeMoves pegs [("t1","t2"),("t1","t3"),("t2","t3")]
-hanoi 3 pegs = makeMoves pegs [("t1","t2"),("t1","t3"),("t2","t3")]
+hanoi 2 pegs = makeMoves pegs             [("t1","t2"),             ("t1","t3"),            ("t2","t3")]
+hanoi 3 pegs = makeMoves pegs [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t3"),("t1","t3")]
 
 
 main::IO()
