@@ -29,12 +29,6 @@ makeMoves pegs [] = pegs
 makeMoves pegs [move] = makeMove pegs move
 makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 
-moves:: Integer->[Move]
-moves 1 = [("t1","t3")]
-moves 2 =             [("t1","t2"),             ("t1","t3"),            ("t2","t3")]
-moves 3 = [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t3"),("t1","t3")]
-moves 4 = moves 3
-
 transformMove::Move->Transform->Move
 transformMove (source, target) (source',target') = (if source==source' then target' else source,if target==source' then target' else target)
 
@@ -44,8 +38,20 @@ mergeMoves (source,target) (source',target') (source'',target'') = (mergePegName
 mergePegNames::PegName->PegName->PegName->PegName
 mergePegNames original change change' = if original==change then change' else change
 
-transformMoves::[Move]->Transform->[Move]
-transformMoves moves (source',target') = [ mergeMoves move (transformMove move (source',target')) (transformMove move (target',source')) | move <- moves] 
+makeTransformation::[Move]->Transform->[Move]
+makeTransformation moves (source',target') = [ mergeMoves move (transformMove move (source',target')) (transformMove move (target',source')) | move <- moves] 
+
+makeTransformations:: [Move]->[Transform]->[Move]
+makeTransformations moves [] = moves
+makeTransformations moves [transform] = makeTransformation moves transform
+makeTransformations moves (t:ts) = makeTransformations (makeTransformation moves t) ts
+
+moves:: Integer->[Move]
+moves 1 = [("t1","t3")]
+moves 2 =             [("t1","t2"),             ("t1","t3"),            ("t2","t3")]
+moves 3 = [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t3"),("t1","t3")]
+moves 4 = (makeTransformation (moves 3) ("t3","t2")) ++ (moves 1) ++ (makeTransformation (moves 3) ("t2","t1") )
+
             
 hanoi:: Integer->[Peg]->[Peg]
 hanoi 1 pegs = makeMoves pegs (moves 1)
@@ -70,7 +76,6 @@ main = do
   print "3"
   print $ create3Pegs 3;
   print $ moves 3
-  print $ transformMoves (moves 3) ("t3","t2")
   print $ hanoi 3 $ create3Pegs 3;
   print "4" 
   print $ create3Pegs 4;
