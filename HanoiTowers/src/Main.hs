@@ -36,13 +36,13 @@ moves 3 = [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t
 moves 4 = moves 3
 
 transformMove::Move->Transform->Move
-transformMove (source, target) (source',target') = if source==source' then (target',source) else (source,target)
+transformMove (source, target) (source',target') = (if source==source' then target' else source,if target==source' then target' else target)
 
 mergeMoves::Move->Move->Move->Move
 mergeMoves (source,target) (source',target') (source'',target'') = (mergePegNames source source' source'' , mergePegNames target target' target'' )
 
 mergePegNames::PegName->PegName->PegName->PegName
-mergePegNames original change change' = original
+mergePegNames original change change' = if original==change then change' else change
 
 transformMoves::[Move]->Transform->[Move]
 transformMoves moves (source',target') = [ mergeMoves move (transformMove move (source',target')) (transformMove move (target',source')) | move <- moves] 
@@ -61,14 +61,19 @@ main::IO()
 main = do
   print "1" 
   print $ create3Pegs 1;
+  print $ moves 1
   print $ hanoi 1 $ create3Pegs 1;
   print "2"     
   print $ create3Pegs 2;
+  print $ moves 2
   print $ hanoi 2 $ create3Pegs 2;
   print "3"
   print $ create3Pegs 3;
+  print $ moves 3
+  print $ transformMoves (moves 3) ("t3","t2")
   print $ hanoi 3 $ create3Pegs 3;
   print "4" 
   print $ create3Pegs 4;
+  print $ moves 4
   print $ hanoi 4 $ create3Pegs 4;
   
