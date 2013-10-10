@@ -49,7 +49,7 @@ makeTransformations moves (t:ts) = makeTransformations (makeTransformation moves
 moves:: Integer->[Move]
 moves 1 = [("t1","t3")]
 moves 2 =             [("t1","t2"),             ("t1","t3"),            ("t2","t3")]
-moves 3 = [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t3"),("t1","t3")]
+moves 3 = (makeTransformation (moves 2) ("t3","t2")) ++ (moves 1) ++ (makeTransformation (moves 2) ("t2","t1") )
 moves 4 = (makeTransformation (moves 3) ("t3","t2")) ++ (moves 1) ++ (makeTransformation (moves 3) ("t2","t1") )
 
             
