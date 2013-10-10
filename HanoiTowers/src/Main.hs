@@ -47,11 +47,19 @@ makeTransformations moves [transform] = makeTransformation moves transform
 makeTransformations moves (t:ts) = makeTransformations (makeTransformation moves t) ts
 
 moves:: Integer->[Move]
-moves 1 = [("t1","t3")]
+moves n = autoMakeMoves n
+{--moves 1 = [("t1","t3")]
 moves 2 = (makeTransformation (moves 1) ("t3","t2")) ++ (moves 1) ++ (makeTransformation (moves 1) ("t2","t1") )
 moves 3 = (makeTransformation (moves 2) ("t3","t2")) ++ (moves 1) ++ (makeTransformation (moves 2) ("t2","t1") )
 moves 4 = (makeTransformation (moves 3) ("t3","t2")) ++ (moves 1) ++ (makeTransformation (moves 3) ("t2","t1") )
 moves 5 = (makeTransformation (moves 4) ("t3","t2")) ++ (moves 1) ++ (makeTransformation (moves 4) ("t2","t1") )
+--}
+
+
+autoMakeMoves:: Integer->[Move]
+autoMakeMoves 0 = []
+autoMakeMoves 1 = [("t1","t3")]
+autoMakeMoves number = (makeTransformation (autoMakeMoves (number-1)) ("t3","t2") ) ++ autoMakeMoves 1 ++ (makeTransformation (autoMakeMoves (number-1)) ("t2","t1") )
 
             
 hanoi:: Integer->[Peg]->[Peg]
