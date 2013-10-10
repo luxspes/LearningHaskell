@@ -28,12 +28,17 @@ makeMoves pegs [] = pegs
 makeMoves pegs [move] = makeMove pegs move
 makeMoves pegs (m:ms) = makeMoves (makeMove pegs m) ms
 
+moves:: Integer->[Move]
+moves 1 = [("t1","t3")]
+moves 2 =             [("t1","t2"),             ("t1","t3"),            ("t2","t3")]
+moves 3 = [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t3"),("t1","t3")]
+moves 4 = moves 3
 
 hanoi:: Integer->[Peg]->[Peg]
-hanoi 1 pegs = makeMoves pegs [("t1","t3")]
-hanoi 2 pegs = makeMoves pegs             [("t1","t2"),             ("t1","t3"),            ("t2","t3")]
-hanoi 3 pegs = makeMoves pegs [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t3"),("t1","t3")]
-hanoi 4 pegs = makeMoves pegs [("t1","t3"),("t1","t2"),("t3","t2"), ("t1","t3"),("t2","t1"),("t2","t3"),("t1","t3")]
+hanoi 1 pegs = makeMoves pegs (moves 1)
+hanoi 2 pegs = makeMoves pegs (moves 2)
+hanoi 3 pegs = makeMoves pegs (moves 3)
+hanoi 4 pegs = makeMoves pegs (moves 4)
 
 main::IO()
 main = do
